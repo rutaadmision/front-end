@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { ProblemsComponent } from './features/problems/problems.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import { HomeComponent } from './features/home/home.component';
 
 /*export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -14,7 +14,7 @@ import { AuthGuard } from './core/guards/auth.guard';
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./features/home/home.component').then((m) => m.HomeComponent)
+    component:HomeComponent
   },
   { path: 'login', 
     loadComponent: () => import('./features/login/login.component').then((m)=> m.LoginComponent)
