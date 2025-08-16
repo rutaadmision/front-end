@@ -1,6 +1,4 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './features/home/home.component';
-import { LoginComponent } from './features/login/login.component';
 import { ProblemsComponent } from './features/problems/problems.component';
 import { AuthGuard } from './core/guards/auth.guard';
 
@@ -14,8 +12,15 @@ import { AuthGuard } from './core/guards/auth.guard';
 ];*/
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'problems', component: ProblemsComponent, canActivate: [AuthGuard] },
+  {
+    path: '',
+    loadComponent: () => import('./features/home/home.component').then((m) => m.HomeComponent)
+  },
+  { path: 'login', 
+    loadComponent: () => import('./features/login/login.component').then((m)=> m.LoginComponent)
+  },
+  { path: 'problems', loadComponent: () => import('./features/problems/problems.component').then((m)=> m.ProblemsComponent), 
+    canActivate: [AuthGuard]
+  },
   { path: '**', redirectTo: '' },
 ];
