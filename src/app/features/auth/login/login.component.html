@@ -6,24 +6,32 @@
       <h2>Bienvenido de Vuelta</h2>
       <p>Continúa tu preparación para el éxito</p>
     </div>
-    <form class="auth-form" onsubmit="handleLogin(event)">
+    <form class="auth-form" [formGroup]="loginForm" (ngSubmit)="onLogin()">
       <div class="form-group">
         <label>Correo Electrónico</label>
-        <input type="email" placeholder="tu@email.com" required>
+        <input type="email" placeholder="tu@email.com" required formControlName="email">
+        @if (email.errors?.['email']) {
+          <span>
+            email malo
+          </span>
+        }
       </div>
       <div class="form-group">
         <label>Contraseña</label>
-        <input type="password" placeholder="Tu contraseña" required>
+        <input type="password" placeholder="Tu contraseña" required formControlName="password">
       </div>
-      <button type="submit" class="btn btn-primary btn-full">Iniciar Sesión</button>
+      <button type="submit" class="btn btn-primary btn-full" [disabled]="loginForm.invalid">Iniciar Sesión</button>
     </form>
     <div class="auth-footer">
       <p>¿No tienes cuenta? <a routerLink="/signup">Regístrate</a></p>
     </div>
   </div>
 </div>
+{{email.errors | json}}
 
->
+
+
+
 <!--
 <div class="login-form">
   <h2>Login</h2>
