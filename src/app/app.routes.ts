@@ -15,7 +15,7 @@ import { MainLayoutComponent } from './layouts/main/main-layout/main-layout.comp
 export const routes: Routes = [
   {
     path: '',
-    component:MainLayoutComponent,
+    component: MainLayoutComponent,
     children: [
       {
         path: '',
@@ -23,13 +23,17 @@ export const routes: Routes = [
       }
     ]
   },
-  
-  
-  
-  { path: 'login', 
-    loadComponent: () => import('./features/login/login.component').then((m)=> m.LoginComponent)
+
+  {
+    path: 'login',
+    loadComponent: () => import('./features/auth/login/login.component').then((m) => m.LoginComponent)
   },
-  { path: 'problems', loadComponent: () => import('./features/problems/problems.component').then((m)=> m.ProblemsComponent), 
+  {
+    path: 'signup',
+    loadComponent: () => import('./features/auth/signup/signup.component').then((m) => m.SignupComponent)
+  },
+  {
+    path: 'problems', loadComponent: () => import('./features/problems/problems.component').then((m) => m.ProblemsComponent),
     canActivate: [AuthGuard]
   },
   { path: '**', redirectTo: '' },
