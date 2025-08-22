@@ -2,21 +2,21 @@ import { Component, inject } from '@angular/core';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { JsonPipe } from '@angular/common';
+import { JsonPipe, NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule,NgClass],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
 
   private fb = inject(FormBuilder);
-
+  emailRegex = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
   loginForm = this.fb.group({
-    'email': ['', [Validators.required, Validators.email]],
+    'email': ['', [Validators.required, Validators.pattern(this.emailRegex)]],
     'password': ['', [Validators.required]]
   });
 

@@ -34,6 +34,7 @@ export class AuthService {
   }
 
   logout() {
+    this.logOutGoogle();
     localStorage.removeItem(this.tokenKey);
     this.router.navigate(['/login']);
   }
@@ -46,8 +47,6 @@ export class AuthService {
 
     return !!this.getToken();
   }
-
-
 
   getGoogleAuth() {
     return getAuth();
@@ -70,7 +69,7 @@ export class AuthService {
 
   }
 
-  logOutGoogle() {
+  private logOutGoogle() {
     return signOut(this.getGoogleAuth());
   }
 
