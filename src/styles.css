@@ -185,6 +185,23 @@ body {
     font-size: 0.875rem;
 }
 
+.btn-google {
+    background: var(--surface);
+    color: var(--text-primary);
+    border: 2px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+.btn-google:hover {
+    background: #f8f9fa;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-google i {
+    color: #ea4335;
+}
+
 /* Features Section */
 .features {
     padding: 4rem;
@@ -272,6 +289,30 @@ body {
 .auth-footer {
     text-align: center;
     margin-top: 2rem;
+}
+
+.auth-divider {
+    text-align: center;
+    margin: 2rem 0;
+    position: relative;
+}
+
+.auth-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--border);
+}
+
+.auth-divider span {
+    background: var(--surface);
+    padding: 0 1rem;
+    position: relative;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
 }
 
 /* Dashboard */
