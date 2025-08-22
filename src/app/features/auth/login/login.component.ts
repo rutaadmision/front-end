@@ -7,7 +7,7 @@ import { JsonPipe } from '@angular/common';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule,JsonPipe],
+  imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
@@ -39,6 +39,16 @@ export class LoginComponent {
       error: (err) => alert('Login failed: ' + err.message),
     });*/
   }
+
+  async handleGoogleLogin(): Promise<void> {
+    try {
+      await this.auth.logInGoogle();
+      this.router.navigateByUrl('/dashboard');
+    } catch (error) {
+      console.error('Google Sign-In error:', error);
+    }
+  }
+
 
   // Signup method
   /*onSignup() {

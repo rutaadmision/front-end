@@ -26,7 +26,7 @@
       <span>o continúa con</span>
     </div>
 
-    <button class="btn btn-google btn-full" onclick="handleGoogleLogin()">
+    <button class="btn btn-google btn-full" (click)="handleGoogleLogin()">
       <i class="fab fa-google"></i>
       Iniciar sesión con Google
     </button>
@@ -35,9 +35,6 @@
     </div>
   </div>
 </div>
-{{email.errors | json}}
-
-
 
 
 <!--
