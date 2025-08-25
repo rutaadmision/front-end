@@ -33,11 +33,15 @@ export class LoginComponent {
 
   // Login method
   onLogin() {
-    console.log(this.loginForm.valid);
-    /*this.auth.login(this.username, this.password).subscribe({
-      next: () => this.router.navigate(['/problems']),
+
+    this.auth.login(this.email.value, this.password.value).subscribe({
+      next: () => {
+        console.log()
+        this.router.navigateByUrl('/dashboard')
+
+      },
       error: (err) => alert('Login failed: ' + err.message),
-    });*/
+    });
   }
 
   async handleGoogleLogin(): Promise<void> {

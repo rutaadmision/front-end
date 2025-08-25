@@ -3,22 +3,27 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private tokenKey = 'access_token';
-  private apiUrl = 'http://127.0.0.1:8000/api';
+  private refreshtoken = 'access_token';
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient, private router: Router) { }
 
   login(username: string, password: string) {
     return this.http
-      .post<{ access_token: string }>(`${this.apiUrl}/token/`, {
+      .post<{ access_token: string,  refresh: string}>(`${this.apiUrl}/users/token/`, {
         username,
         password,
       })
       .pipe(
-        tap((res) => localStorage.setItem(this.tokenKey, res.access_token))
+        tap((res) => {
+          localStorage.setItem(this.tokenKey, res.access_token);
+          localStorage.setItem(this.refreshtoken, res.refresh);
+        })
       );
   }
 
@@ -33,6 +38,12 @@ export class AuthService {
       );
   }
 
+  refreshToken(){
+
+  }
+
+
+
   logout() {
     this.logOutGoogle();
     localStorage.removeItem(this.tokenKey);
@@ -41,6 +52,11 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
+  }
+
+
+  getRefreshToken(){
+    return localStorage.getItem(this.refreshtoken);
   }
 
   isLoggedIn(): boolean {
