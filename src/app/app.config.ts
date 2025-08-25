@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { routes } from './app.routes';
@@ -7,7 +7,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
-
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 initializeApp(environment.firebase);
 export const appConfig: ApplicationConfig = {
@@ -16,6 +16,6 @@ export const appConfig: ApplicationConfig = {
   provideClientHydration(),
   provideHttpClient(withInterceptors([AuthInterceptor])),
   provideFirebaseApp(() => initializeApp(environment.firebase)),
-  provideAuth(() => getAuth())
+  provideAuth(() => getAuth()), importProvidersFrom(SweetAlert2Module.forRoot())
   ]
 };

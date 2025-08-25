@@ -8,21 +8,21 @@ import { environment } from '../../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private tokenKey = 'access_token';
-  private refreshtoken = 'access_token';
+  private refreshTokenKey = 'refresh_token';
   private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient, private router: Router) { }
 
   login(username: string, password: string) {
     return this.http
-      .post<{ access_token: string,  refresh: string}>(`${this.apiUrl}/users/token/`, {
+      .post<{ refresh: string, access: string }>(`${this.apiUrl}/users/token/`, {
         username,
         password,
       })
       .pipe(
         tap((res) => {
-          localStorage.setItem(this.tokenKey, res.access_token);
-          localStorage.setItem(this.refreshtoken, res.refresh);
+          this.setToken('res.access');
+          this.setRefreshToken('res.refresh');
         })
       );
   }
@@ -38,8 +38,10 @@ export class AuthService {
       );
   }
 
-  refreshToken(){
-
+  refreshToken() {
+    const refreshtoken = this.getRefreshToken();
+    return this.http
+      .post<{ access: string }>(`${this.apiUrl}/register/`, { refreshtoken })
   }
 
 
@@ -47,16 +49,25 @@ export class AuthService {
   logout() {
     this.logOutGoogle();
     localStorage.removeItem(this.tokenKey);
-    this.router.navigate(['/login']);
+    localStorage.removeItem(this.refreshTokenKey);
+    this.router.navigate(['/']);
   }
 
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
 
+  setToken(accessToken: string) {
+    localStorage.setItem(this.tokenKey, accessToken);
+  }
 
-  getRefreshToken(){
-    return localStorage.getItem(this.refreshtoken);
+
+  setRefreshToken(refreshToken: string) {
+    localStorage.setItem(this.refreshTokenKey, refreshToken);
+  }
+
+  getRefreshToken() {
+    return localStorage.getItem(this.refreshTokenKey);
   }
 
   isLoggedIn(): boolean {
@@ -75,7 +86,7 @@ export class AuthService {
       const user = result.user;
       if (!user) {
         throw new Error('Google-Login error');
-      }else{
+      } else {
         localStorage.setItem(this.tokenKey, (await user.getIdTokenResult(true)).token);
       }
     } catch (error) {

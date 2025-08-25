@@ -15,7 +15,6 @@ export class QuestionService {
     return this.http
       .get<any>(`${this.apiUrl}/questions/?category=Math`).pipe(
         catchError((error: any) => {
-          console.error('Error fetching category data', error);
           return throwError(() => new Error('Failed to fetch category data'));
         })
       );
