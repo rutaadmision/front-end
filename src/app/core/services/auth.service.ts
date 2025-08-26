@@ -21,15 +21,15 @@ export class AuthService {
       })
       .pipe(
         tap((res) => {
-          this.setToken('res.access');
-          this.setRefreshToken('res.refresh');
+          this.setToken(res.access);
+          this.setRefreshToken(res.refresh);
         })
       );
   }
 
   signup(username: string, password: string) {
     return this.http
-      .post<{ access_token: string }>(`${this.apiUrl}/register/`, {
+      .post<{ access_token: string }>(`${this.apiUrl}/users/register/`, {
         username,
         password,
       })
@@ -41,7 +41,7 @@ export class AuthService {
   refreshToken() {
     const refreshtoken = this.getRefreshToken();
     return this.http
-      .post<{ access: string }>(`${this.apiUrl}/register/`, { refreshtoken })
+      .post<{ access: string }>(`${this.apiUrl}/users/token/refresh/`, { 'refresh':refreshtoken })
   }
 
 

@@ -7,7 +7,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { provideSweetAlert2 } from '@sweetalert2/ngx-sweetalert2';
 
 initializeApp(environment.firebase);
 export const appConfig: ApplicationConfig = {
@@ -16,6 +16,6 @@ export const appConfig: ApplicationConfig = {
   provideClientHydration(),
   provideHttpClient(withInterceptors([AuthInterceptor])),
   provideFirebaseApp(() => initializeApp(environment.firebase)),
-  provideAuth(() => getAuth()), importProvidersFrom(SweetAlert2Module.forRoot())
+  provideAuth(() => getAuth()), provideSweetAlert2()
   ]
 };
