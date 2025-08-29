@@ -1,23 +1,27 @@
+import { NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { AuthService } from '../../../core/services/auth.service';
+import {
+  FormBuilder,
+  FormControl,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { JsonPipe, NgClass } from '@angular/common';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule,NgClass],
+  imports: [RouterLink, ReactiveFormsModule, NgClass],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-
   private fb = inject(FormBuilder);
-  emailRegex = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
+  emailRegex = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   loginForm = this.fb.group({
-    'email': ['', [Validators.required, Validators.pattern(this.emailRegex)]],
-    'password': ['', [Validators.required]]
+    email: ['', [Validators.required, Validators.pattern(this.emailRegex)]],
+    password: ['', [Validators.required]],
   });
 
   get email() {
@@ -28,17 +32,14 @@ export class LoginComponent {
     return this.loginForm.get('password') as FormControl;
   }
 
-  constructor(private auth: AuthService, private router: Router) { }
-
+  constructor(private auth: AuthService, private router: Router) {}
 
   // Login method
   onLogin() {
-
     this.auth.login(this.email.value, this.password.value).subscribe({
       next: () => {
-        console.log()
-        this.router.navigateByUrl('/dashboard')
-
+        console.log();
+        this.router.navigateByUrl('/dashboard');
       },
       error: (err) => alert('Login failed: ' + err.message),
     });
@@ -52,13 +53,4 @@ export class LoginComponent {
       console.error('Google Sign-In error:', error);
     }
   }
-
-
-  // Signup method
-  /*onSignup() {
-    this.auth.signup(this.username, this.password).subscribe({
-      next: () => this.router.navigate(['/problems']),
-      error: (err) => alert('Signup failed: ' + err.message),
-    });
-  }*/
 }

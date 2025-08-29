@@ -1,57 +1,54 @@
 <div class="dashboard">
+  <app-sidebar />
 
-    <app-sidebar/>
-
-
-    <div class="dashboard-main">
-        <div class="dashboard-header">
-            <h1>Matemáticas</h1>
-            <p>Selecciona un test para comenzar</p>
-        </div>
-
-        <div class="tests-grid">
-            <div class="test-card" onclick="startTest('algebra')">
-                <div class="test-icon">
-                    <i class="fas fa-square-root-alt"></i>
-                </div>
-                <h3>Álgebra Básica</h3>
-                <p>30 preguntas • 45 minutos</p>
-                <div class="test-progress">
-                    <span>Progreso: 12/30</span>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 40%"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="test-card" onclick="startTest('geometria')">
-                <div class="test-icon">
-                    <i class="fas fa-shapes"></i>
-                </div>
-                <h3>Geometría</h3>
-                <p>25 preguntas • 40 minutos</p>
-                <div class="test-progress">
-                    <span>Progreso: 0/25</span>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 0%"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="test-card" onclick="startTest('trigonometria')">
-                <div class="test-icon">
-                    <i class="fas fa-chart-pie"></i>
-                </div>
-                <h3>Trigonometría</h3>
-                <p>20 preguntas • 35 minutos</p>
-                <div class="test-progress">
-                    <span>Progreso: 15/20</span>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 75%"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="dashboard-main">
+    <div class="dashboard-header">
+      <h1>Matemáticas</h1>
+      <p>Selecciona un test para comenzar</p>
     </div>
 
+    <div class="tests-grid">
+      <div class="test-card" onclick="startTest('algebra')">
+        <div class="test-icon">
+          <i class="fas fa-square-root-alt"></i>
+        </div>
+        <h3>Álgebra Básica</h3>
+        <p>30 preguntas • 45 minutos</p>
+        <div class="test-progress">
+          <span>Progreso: 12/30</span>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 40%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="test-card" onclick="startTest('geometria')">
+        <div class="test-icon">
+          <i class="fas fa-shapes"></i>
+        </div>
+        <h3>Geometría</h3>
+        <p>25 preguntas • 40 minutos</p>
+        <div class="test-progress">
+          <span>Progreso: 0/25</span>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="test-card" onclick="startTest('trigonometria')">
+        <div class="test-icon">
+          <i class="fas fa-chart-pie"></i>
+        </div>
+        <h3>Trigonometría</h3>
+        <p>20 preguntas • 35 minutos</p>
+        <div class="test-progress">
+          <span>Progreso: 15/20</span>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 75%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
