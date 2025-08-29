@@ -1,8 +1,13 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+} from 'firebase/auth';
 import { tap } from 'rxjs/operators';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -11,43 +16,46 @@ export class AuthService {
   private refreshTokenKey = 'refresh_token';
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {}
 
-  login(username: string, password: string) {
+  login(email: string, password: string) {
     return this.http
-      .post<{ refreshToken: string, accessToken: string  }>(`${this.apiUrl}/users/token/`, {
-        username,
-        password,
-      })
+      .post<{ refresh: string; access: string }>(
+        `${this.apiUrl}/users/token/`,
+        {
+          email,
+          password,
+        }
+      )
       .pipe(
         tap((res) => {
-          this.setToken(res.accessToken);
-          this.setRefreshToken(res.refreshToken);
+          this.setToken(res.access);
+          this.setRefreshToken(res.refresh);
         })
       );
   }
 
-  signup(username: string, password: string) {
+  signup(email: string, password: string) {
     return this.http
-      .post<{ refreshToken: string, accessToken: string }>(`${this.apiUrl}/users/register/`, {
-        username,
+      .post<{ refresh: string; access: string }>(`${this.apiUrl}/users/register/`, {
+        email,
         password,
       })
       .pipe(
         tap((res) => {
-          this.setToken(res.accessToken);
-          this.setRefreshToken(res.refreshToken);
+          this.setToken(res.access);
+          this.setRefreshToken(res.refresh);
         })
       );
   }
 
   refreshToken() {
     const refreshtoken = this.getRefreshToken();
-    return this.http
-      .post<{ access: string }>(`${this.apiUrl}/users/token/refresh/`, { 'refresh':refreshtoken })
+    return this.http.post<{ access: string }>(
+      `${this.apiUrl}/users/token/refresh/`,
+      { refresh: refreshtoken }
+    );
   }
-
-
 
   logout() {
     this.logOutGoogle();
@@ -63,7 +71,6 @@ export class AuthService {
   setToken(accessToken: string) {
     localStorage.setItem(this.tokenKey, accessToken);
   }
-
 
   setRefreshToken(refreshToken: string) {
     localStorage.setItem(this.refreshTokenKey, refreshToken);
@@ -90,19 +97,18 @@ export class AuthService {
       if (!user) {
         throw new Error('Google-Login error');
       } else {
-        localStorage.setItem(this.tokenKey, (await user.getIdTokenResult(true)).token);
+        localStorage.setItem(
+          this.tokenKey,
+          (await user.getIdTokenResult(true)).token
+        );
       }
     } catch (error) {
       console.error('Google-Login error:', error);
       throw error;
     }
-
   }
 
   private logOutGoogle() {
     return signOut(this.getGoogleAuth());
   }
-
-
-
 }

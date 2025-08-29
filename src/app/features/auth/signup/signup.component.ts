@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { JsonPipe, NgClass } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { SweetAlertService } from '../../../core/services/ui/sweet-alert.service';
 import { passwordValidator } from '../../../shared/validators/password.validator';
@@ -11,9 +11,8 @@ import { passwordValidator } from '../../../shared/validators/password.validator
   selector: 'app-signup',
   imports: [RouterLink, ReactiveFormsModule, JsonPipe, NgClass],
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.css'
+  styleUrl: './signup.component.css',
 })
-
 export class SignupComponent {
   private fb = inject(FormBuilder)
   private alertService = inject(SweetAlertService);
@@ -30,9 +29,11 @@ export class SignupComponent {
     return this.signUpForm.get('name') as FormControl;
   }
 
+
   get email() {
     return this.signUpForm.get('email') as FormControl;
   }
+
 
   get password() {
     return this.signUpForm.get('password') as FormControl;

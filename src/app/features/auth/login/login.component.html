@@ -7,42 +7,60 @@
       <p>Continúa tu preparación para el éxito</p>
     </div>
     <form class="auth-form" [formGroup]="loginForm" (ngSubmit)="onLogin()">
-      <div class="form-group" [ngClass]="
-            {'error': email.invalid && !email.pristine, 
-            'success' : email.valid && !email.pristine}">
+      <div
+        class="form-group"
+        [ngClass]="{
+          error: email.invalid && !email.pristine,
+          success: email.valid && !email.pristine
+        }"
+      >
         <label>Correo Electrónico</label>
-        <input type="email" placeholder="tu@email.com" required formControlName="email">
+        <input
+          type="email"
+          placeholder="tu@email.com"
+          required
+          formControlName="email"
+        />
         <div class="error-message" [hidden]="email.valid || email.pristine">
           @if (email.errors?.['required']) {
-            <span>
-              El correo electrónico es requerido
-            </span>
-          }
-          
-          @if (email.errors?.['pattern']) {
-            <span>
-              Por favor ingresa un correo válido
-            </span>
+          <span> El correo electrónico es requerido </span>
+          } @if (email.errors?.['pattern']) {
+          <span> Por favor ingresa un correo válido </span>
           }
         </div>
       </div>
 
-      <div class="form-group" [ngClass]="
-            {'error': password.invalid && !password.pristine, 
-            'success' : password.valid && !password.pristine}">
+      <div
+        class="form-group"
+        [ngClass]="{
+          error: password.invalid && !password.pristine,
+          success: password.valid && !password.pristine
+        }"
+      >
         <label>Contraseña</label>
-        <input type="password" placeholder="Tu contraseña" required formControlName="password">
-        <div class="error-message" [hidden]="password.valid || password.pristine">
+        <input
+          type="password"
+          placeholder="Tu contraseña"
+          required
+          formControlName="password"
+        />
+        <div
+          class="error-message"
+          [hidden]="password.valid || password.pristine"
+        >
           @if (password.errors?.['required']) {
-          <span>
-            La contraseña es requerida
-          </span>
+          <span> La contraseña es requerida </span>
           }
         </div>
       </div>
 
-
-      <button type="submit" class="btn btn-primary btn-full" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+      <button
+        type="submit"
+        class="btn btn-primary btn-full"
+        [disabled]="loginForm.invalid"
+      >
+        Iniciar Sesión
+      </button>
     </form>
     <div class="auth-divider">
       <span>o continúa con</span>
@@ -57,24 +75,3 @@
     </div>
   </div>
 </div>
-
-
-<!--
-<div class="login-form">
-  <h2>Login</h2>
-  <form (ngSubmit)="onLogin()">
-    <input [(ngModel)]="username" name="username" placeholder="Username" required />
-    <input [(ngModel)]="password" name="password" type="password" placeholder="Password" required />
-    <button type="submit">Login</button>
-  </form>
-</div>
-
-<div class="signup-form">
-  <h2>Signup</h2>
-  <form (ngSubmit)="onSignup()">
-    <input [(ngModel)]="username" name="newUsername" placeholder="Username" required />
-    <input [(ngModel)]="password" name="newPassword" type="password" placeholder="Password" required />
-    <button type="submit">Signup</button>
-  </form>
-</div>
--->

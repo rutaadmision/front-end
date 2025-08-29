@@ -1,7 +1,7 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { catchError, EMPTY, switchMap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
-import { catchError, EMPTY, switchMap, throwError } from 'rxjs';
 import { SweetAlertService } from '../services/ui/sweet-alert.service';
 
 export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
@@ -40,7 +40,6 @@ export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
           }),
           catchError(() => {
             return handleSessionExpired();
-
           })
         );
       }

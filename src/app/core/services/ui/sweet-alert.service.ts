@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SweetAlertService {
-
-   showAlert(
+  showAlert(
     title: string,
     text: string = '',
     icon: SweetAlertIcon = 'info'
