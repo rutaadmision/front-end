@@ -4,7 +4,7 @@
             <h2>Crear Cuenta</h2>
             <p>Únete a miles de estudiantes que ya están preparándose</p>
         </div>
-        <form class="auth-form" [formGroup]="signUpForm">
+        <form class="auth-form" [formGroup]="signUpForm" (ngSubmit)="onSignup()">
             <div class="form-group" [ngClass]="
             {'error': name.invalid && !name.pristine, 
             'success' : name.valid && !name.pristine}">
@@ -45,15 +45,14 @@
                 <label>Contraseña</label>
                 <input type="password" placeholder="Mínimo 8 caracteres" formControlName="password">
                 <div class="error-message" [hidden]="password.valid || password.pristine">
-
                     @if (password.errors?.['required']) {
                     <span>
                         La contraseña es requerida
                     </span>
                     }
-                    @if (password.errors?.['minlength']) {
+                    @if (password.errors?.['passwordStrength']) {
                     <span>
-                        La contraseña debe tener al menos 8 caracteres
+                        La contraseña debe contener al menos 8 caracteres, una letra mayúscula, una minúscula, un número y un carácter especial.
                     </span>
                     }
                 </div>

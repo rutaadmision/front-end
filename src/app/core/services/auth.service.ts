@@ -15,26 +15,29 @@ export class AuthService {
 
   login(username: string, password: string) {
     return this.http
-      .post<{ refresh: string, access: string }>(`${this.apiUrl}/users/token/`, {
+      .post<{ refreshToken: string, accessToken: string  }>(`${this.apiUrl}/users/token/`, {
         username,
         password,
       })
       .pipe(
         tap((res) => {
-          this.setToken(res.access);
-          this.setRefreshToken(res.refresh);
+          this.setToken(res.accessToken);
+          this.setRefreshToken(res.refreshToken);
         })
       );
   }
 
   signup(username: string, password: string) {
     return this.http
-      .post<{ access_token: string }>(`${this.apiUrl}/users/register/`, {
+      .post<{ refreshToken: string, accessToken: string }>(`${this.apiUrl}/users/register/`, {
         username,
         password,
       })
       .pipe(
-        tap((res) => localStorage.setItem(this.tokenKey, res.access_token))
+        tap((res) => {
+          this.setToken(res.accessToken);
+          this.setRefreshToken(res.refreshToken);
+        })
       );
   }
 
@@ -53,7 +56,7 @@ export class AuthService {
     this.router.navigate(['/']);
   }
 
-  getToken(): string | null {
+  getToken(): string | null | undefined {
     return localStorage.getItem(this.tokenKey);
   }
 
@@ -71,8 +74,8 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-
-    return !!this.getToken();
+    const token =this.getToken();
+    return token !== null && token !== "undefined" && token !== '';
   }
 
   getGoogleAuth() {

@@ -3,6 +3,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { JsonPipe, NgClass } from '@angular/common';
+import { UserLogin } from '../../../models/user-login';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,8 @@ import { JsonPipe, NgClass } from '@angular/common';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
+
+  private userLoginObj: UserLogin  = new UserLogin();
 
   private fb = inject(FormBuilder);
   emailRegex = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
@@ -36,9 +39,7 @@ export class LoginComponent {
 
     this.auth.login(this.email.value, this.password.value).subscribe({
       next: () => {
-        console.log()
         this.router.navigateByUrl('/dashboard')
-
       },
       error: (err) => alert('Login failed: ' + err.message),
     });
@@ -53,12 +54,4 @@ export class LoginComponent {
     }
   }
 
-
-  // Signup method
-  /*onSignup() {
-    this.auth.signup(this.username, this.password).subscribe({
-      next: () => this.router.navigate(['/problems']),
-      error: (err) => alert('Signup failed: ' + err.message),
-    });
-  }*/
 }
