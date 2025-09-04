@@ -6,6 +6,13 @@
       <h2>Bienvenido de Vuelta</h2>
       <p>Continúa tu preparación para el éxito</p>
     </div>
+    <div>
+      <a routerLink="{{ MapRoutes.home }}">
+        <button class="btn btn-outline btn-small back-home">
+          <i class="fas fa-home"></i> Volver al inicio
+        </button>
+      </a>
+    </div>
     <form class="auth-form" [formGroup]="loginForm" (ngSubmit)="onLogin()">
       <div
         class="form-group"

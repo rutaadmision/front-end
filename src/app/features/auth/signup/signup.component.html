@@ -4,6 +4,14 @@
       <h2>Crear Cuenta</h2>
       <p>Únete a miles de estudiantes que ya están preparándose</p>
     </div>
+    <div>
+      <a routerLink="{{ MapRoutes.home }}">
+        <button class="btn btn-outline btn-small back-home">
+          <i class="fas fa-home"></i> Volver al inicio
+        </button>
+      </a>
+    </div>
+
     <form class="auth-form" [formGroup]="signUpForm" (ngSubmit)="onSignup()">
       <div
         class="form-group"
