@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { MapRoutes } from '../../../map-routes';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ import { AuthService } from '../../../core/services/auth.service';
 export class LoginComponent {
   private fb = inject(FormBuilder);
   emailRegex = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+  MapRoutes = MapRoutes;
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.pattern(this.emailRegex)]],
     password: ['', [Validators.required]],
@@ -38,7 +40,7 @@ export class LoginComponent {
   onLogin() {
     this.auth.login(this.email.value, this.password.value).subscribe({
       next: () => {
-        this.router.navigateByUrl('/dashboard')
+        this.router.navigateByUrl('/dashboard');
       },
       error: (err) => alert('Login failed: ' + err.message),
     });
@@ -52,5 +54,4 @@ export class LoginComponent {
       console.error('Google Sign-In error:', error);
     }
   }
-
 }
