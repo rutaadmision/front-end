@@ -5,12 +5,21 @@
       <span>Ruta Admisión</span>
     </div>
     <div class="nav-links">
+      @if (isLogin()) {
+
+      <a routerLink="{{ MapRoutes.dashboard }}">
+        <button class="btn btn-outline">Regresar</button>
+      </a>
+
+      }@else {
       <a routerLink="{{ MapRoutes.login }}">
         <button class="btn btn-outline">Iniciar Sesión</button>
       </a>
       <a routerLink="{{ MapRoutes.signup }}">
         <button class="btn btn-primary">Registrarse</button>
       </a>
+
+      }
     </div>
   </nav>
 </div>

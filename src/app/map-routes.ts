@@ -3,4 +3,5 @@ export const MapRoutes = {
   signup: '/auth/signup',
   home: '/',
   profile: '/profile',
+  dashboard: '/dashboard',
 };

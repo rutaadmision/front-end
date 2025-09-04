@@ -1,5 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
+import { MapRoutes } from '../../map-routes';
 import { AuthService } from '../services/auth.service';
 
 export const AuthGuard: CanActivateFn = () => {
@@ -7,7 +8,7 @@ export const AuthGuard: CanActivateFn = () => {
   const router = inject(Router);
 
   if (!auth.isLoggedIn()) {
-    router.navigateByUrl('/login');
+    router.navigateByUrl(MapRoutes.login);
     return false;
   }
   return true;
