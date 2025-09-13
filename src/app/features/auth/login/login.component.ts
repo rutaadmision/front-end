@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -21,6 +21,8 @@ export class LoginComponent {
   private fb = inject(FormBuilder);
   emailRegex = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   MapRoutes = MapRoutes;
+  showPassword = signal<boolean>(false);
+  showError = signal<boolean>(false);
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.pattern(this.emailRegex)]],
     password: ['', [Validators.required]],
@@ -36,14 +38,22 @@ export class LoginComponent {
 
   constructor(private auth: AuthService, private router: Router) {}
 
+  togglePasswordVisibility() {
+    this.showPassword.update((value) => !value);
+  }
+
   // Login method
   onLogin() {
-    this.auth.login(this.email.value, this.password.value).subscribe({
-      next: () => {
-        this.router.navigateByUrl('/dashboard');
-      },
-      error: (err) => alert('Login failed: ' + err.message),
-    });
+    if (!this.loginForm.valid) {
+      this.showError.set(true);
+    } else {
+      this.auth.login(this.email.value, this.password.value).subscribe({
+        next: () => {
+          this.router.navigateByUrl('/dashboard');
+        },
+        error: (err) => alert('Login failed: ' + err.message),
+      });
+    }
   }
 
   async handleGoogleLogin(): Promise<void> {

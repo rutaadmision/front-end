@@ -11,7 +11,7 @@
       <div
         class="form-group"
         [ngClass]="{
-          error: email.invalid && !email.pristine,
+          error: showError() && !email.pristine,
           success: email.valid && !email.pristine
         }"
       >
@@ -22,44 +22,60 @@
           required
           formControlName="email"
         />
-        <div class="error-message" [hidden]="email.valid || email.pristine">
+        @if ((email.invalid || email.pristine) && showError()) {
+        <div [ngClass]="email.invalid ? 'error-message' : ''">
           @if (email.errors?.['required']) {
           <span> El correo electrónico es requerido </span>
           } @if (email.errors?.['pattern']) {
           <span> Por favor ingresa un correo válido </span>
           }
         </div>
+        }
       </div>
 
       <div
         class="form-group"
         [ngClass]="{
-          error: password.invalid && !password.pristine,
+          error: showError() && !password.pristine,
           success: password.valid && !password.pristine
         }"
       >
         <label>Contraseña</label>
         <input
-          type="password"
+          [type]="showPassword() ? 'text' : 'password'"
           placeholder="Tu contraseña"
           required
           formControlName="password"
         />
-        <div
-          class="error-message"
-          [hidden]="password.valid || password.pristine"
+        <button
+          type="button"
+          (click)="togglePasswordVisibility()"
+          class="toggle-password"
         >
+          <i
+            class="fa"
+            [ngClass]="{
+              'fa-eye': !showPassword(),
+              'fa-eye-slash': showPassword()
+            }"
+          ></i>
+        </button>
+
+        @if ((password.invalid || password.pristine) && showError()) {
+        <div [ngClass]="password.invalid ? 'error-message' : ''">
           @if (password.errors?.['required']) {
           <span> La contraseña es requerida </span>
+          } @if (password.errors?.['passwordStrength']) {
+          <span>
+            La contraseña debe contener al menos 8 caracteres, una letra
+            mayúscula, una minúscula, un número y un carácter especial.
+          </span>
           }
         </div>
+        }
       </div>
 
-      <button
-        type="submit"
-        class="btn btn-primary btn-full"
-        [disabled]="loginForm.invalid"
-      >
+      <button type="submit" class="btn btn-primary btn-full">
         Iniciar Sesión
       </button>
     </form>

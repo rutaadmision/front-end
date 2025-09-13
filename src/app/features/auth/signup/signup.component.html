@@ -62,10 +62,25 @@
       >
         <label>Contraseña</label>
         <input
-          type="password"
+          [type]="showPassword() ? 'text' : 'password'"
           placeholder="Mínimo 8 caracteres"
           formControlName="password"
         />
+
+        <button
+          type="button"
+          (click)="togglePasswordVisibility()"
+          class="toggle-password"
+        >
+          <i
+            class="fa"
+            [ngClass]="{
+              'fa-eye': !showPassword(),
+              'fa-eye-slash': showPassword()
+            }"
+          ></i>
+        </button>
+
         @if ((password.invalid || password.pristine) && showError()) {
         <div [ngClass]="password.invalid ? 'error-message' : ''">
           @if (password.errors?.['required']) {

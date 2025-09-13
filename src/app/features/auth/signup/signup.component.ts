@@ -21,7 +21,8 @@ export class SignupComponent {
   private fb = inject(FormBuilder);
   private alertService = inject(SweetAlertService);
 
-  showError = signal(false);
+  showError = signal<boolean>(false);
+  showPassword = signal<boolean>(false);
 
   emailRegex = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   MapRoutes = MapRoutes;
@@ -45,20 +46,23 @@ export class SignupComponent {
 
   constructor(private auth: AuthService, private router: Router) {}
 
+  togglePasswordVisibility() {
+    this.showPassword.update((value) => !value);
+  }
+
   onSignup() {
     if (!this.signUpForm.valid) {
       this.showError.set(true);
-      console.log(this.showError());
+    } else {
+      this.auth.signup(this.email.value, this.password.value).subscribe({
+        next: () => {
+          this.alertService.showSuccess('Cuenta creada exitosamente');
+          this.router.navigateByUrl('/dashboard');
+        },
+        error: (err: { message: string }) => {
+          alert('Signup failed: ' + err.message);
+        },
+      });
     }
-
-    /*this.auth.signup(this.email.value, this.password.value).subscribe({
-      next: () => {
-        this.alertService.showSuccess('Cuenta creada exitosamente');
-        this.router.navigateByUrl('/dashboard');
-      },
-      error: (err: { message: string }) => {
-        alert('Signup failed: ' + err.message);
-      },
-    });*/
   }
 }

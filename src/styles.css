@@ -224,6 +224,30 @@ body {
   gap: 0.5rem;
   align-items: center;
 }
+/* Add toggle password button */
+.toggle-password {
+  position: absolute;
+  right: 0.75rem;
+  top: 70%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 0.25rem;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.toggle-password:focus {
+  outline: none;
+  color: var(--text-primary);
+}
+
+.toggle-password i {
+  pointer-events: none;
+}
 
 /* Features Section */
 .features {
