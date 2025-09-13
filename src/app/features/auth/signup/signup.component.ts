@@ -1,5 +1,5 @@
 import { JsonPipe, NgClass } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -20,14 +20,14 @@ import { passwordValidator } from '../../../shared/validators/password.validator
 export class SignupComponent {
   private fb = inject(FormBuilder);
   private alertService = inject(SweetAlertService);
+
+  showError = signal(false);
+
   emailRegex = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   MapRoutes = MapRoutes;
   signUpForm = this.fb.group({
-    name: ['Ronny Castro', [Validators.required]],
-    email: [
-      'ronnyale0@hotmail.com',
-      [Validators.required, Validators.pattern(this.emailRegex)],
-    ],
+    name: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.pattern(this.emailRegex)]],
     password: ['', [Validators.required, passwordValidator()]],
   });
 
@@ -46,7 +46,12 @@ export class SignupComponent {
   constructor(private auth: AuthService, private router: Router) {}
 
   onSignup() {
-    this.auth.signup(this.email.value, this.password.value).subscribe({
+    if (!this.signUpForm.valid) {
+      this.showError.set(true);
+      console.log(this.showError());
+    }
+
+    /*this.auth.signup(this.email.value, this.password.value).subscribe({
       next: () => {
         this.alertService.showSuccess('Cuenta creada exitosamente');
         this.router.navigateByUrl('/dashboard');
@@ -54,6 +59,6 @@ export class SignupComponent {
       error: (err: { message: string }) => {
         alert('Signup failed: ' + err.message);
       },
-    });
+    });*/
   }
 }

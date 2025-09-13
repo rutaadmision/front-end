@@ -8,7 +8,7 @@
       <div
         class="form-group"
         [ngClass]="{
-          error: name.invalid && !name.pristine,
+          error: showError() && !name.pristine,
           success: name.valid && !name.pristine
         }"
       >
@@ -19,17 +19,20 @@
           formControlName="name"
           pristine
         />
-        <div class="error-message" [hidden]="name.valid || name.pristine">
+
+        @if ((name.invalid || name.pristine) && showError()) {
+        <div [ngClass]="name.invalid ? 'error-message' : ''">
           @if (name.errors?.['required']) {
           <span> El nombre es requerido </span>
           }
         </div>
+        }
       </div>
 
       <div
         class="form-group"
         [ngClass]="{
-          error: email.invalid && !email.pristine,
+          error: showError() && !email.pristine,
           success: email.valid && !email.pristine
         }"
       >
@@ -40,18 +43,20 @@
           required
           formControlName="email"
         />
-        <div class="error-message" [hidden]="email.valid || email.pristine">
+        @if ((email.invalid || email.pristine) && showError()) {
+        <div [ngClass]="email.invalid ? 'error-message' : ''">
           @if (email.errors?.['required']) {
           <span> El correo electrónico es requerido </span>
           } @if (email.errors?.['pattern']) {
           <span> Por favor ingresa un correo válido </span>
           }
         </div>
+        }
       </div>
       <div
         class="form-group"
         [ngClass]="{
-          error: password.invalid && !password.pristine,
+          error: showError() && !password.pristine,
           success: password.valid && !password.pristine
         }"
       >
@@ -61,10 +66,8 @@
           placeholder="Mínimo 8 caracteres"
           formControlName="password"
         />
-        <div
-          class="error-message"
-          [hidden]="password.valid || password.pristine"
-        >
+        @if ((password.invalid || password.pristine) && showError()) {
+        <div [ngClass]="password.invalid ? 'error-message' : ''">
           @if (password.errors?.['required']) {
           <span> La contraseña es requerida </span>
           } @if (password.errors?.['passwordStrength']) {
@@ -74,12 +77,10 @@
           </span>
           }
         </div>
+
+        }
       </div>
-      <button
-        type="submit"
-        class="btn btn-primary btn-full"
-        [disabled]="signUpForm.invalid"
-      >
+      <button type="submit" class="btn btn-primary btn-full">
         Crear Cuenta
       </button>
     </form>
