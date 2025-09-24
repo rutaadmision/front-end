@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { SignupDataService } from '../../../core/services/signup-data.service';
 import { SweetAlertService } from '../../../core/services/ui/sweet-alert.service';
 import { MapRoutes } from '../../../map-routes';
 import { passwordValidator } from '../../../shared/validators/password.validator';
@@ -49,13 +50,17 @@ export class SignupComponent {
     return this.signUpForm.get('password') as FormControl;
   }
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    private auth: AuthService,
+    private signupData: SignupDataService,
+    private router: Router
+  ) {}
 
   togglePasswordVisibility() {
     this.showPassword.update((value) => !value);
   }
 
-  onSignup() {
+  /*onSignup() {
     if (!this.signUpForm.valid) {
       this.showError.set(true);
     } else {
@@ -70,6 +75,32 @@ export class SignupComponent {
           next: () => {
             this.alertService.showSuccess('Cuenta creada exitosamente');
             this.router.navigateByUrl('/dashboard');
+          },
+          error: (err: { message: string }) => {
+            alert('Signup failed: ' + err.message);
+          },
+        });
+    }
+  }*/
+  onSignup() {
+    if (!this.signUpForm.valid) {
+      this.showError.set(true);
+    } else {
+      this.auth
+        .signup(
+          this.name.value,
+          this.lastName.value,
+          this.email.value,
+          this.password.value
+        )
+        .subscribe({
+          next: () => {
+            this.signupData.name = this.name.value;
+            this.signupData.lastName = this.lastName.value;
+            this.signupData.email = this.email.value;
+            this.signupData.password = this.password.value;
+            this.alertService.showSuccess('Email de verificación enviado');
+            this.router.navigateByUrl('/auth/verify-email');
           },
           error: (err: { message: string }) => {
             alert('Signup failed: ' + err.message);

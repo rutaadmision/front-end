@@ -1,0 +1,36 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>Verificación de correo electrónico</h2>
+      <p>
+        Ingresa el código de 6 dígitos que enviamos a:
+        <strong>{{ email }}</strong>
+      </p>
+    </div>
+
+    <form class="auth-form">
+      <div class="form-group input-group">
+        <label for="code">Código de verificación</label>
+        <input
+          id="code"
+          type="text"
+          maxlength="6"
+          placeholder="123456"
+          [value]="code"
+          (input)="onCodeChange($event)"
+        />
+      </div>
+    </form>
+
+    <div class="auth-footer">
+      <p>¿No recibiste el código?</p>
+      <button
+        type="submit"
+        class="btn btn-primary btn-full"
+        (click)="resendVerification()"
+      >
+        Reenviar correo
+      </button>
+    </div>
+  </div>
+</div>

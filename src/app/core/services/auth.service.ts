@@ -35,7 +35,7 @@ export class AuthService {
       );
   }
 
-  signup(name: string, lastName: string, email: string, password: string) {
+  /*signup(name: string, lastName: string, email: string, password: string) {
     return this.http
       .post<{ refresh: string; access: string }>(
         `${this.apiUrl}/users/register/`,
@@ -50,6 +50,36 @@ export class AuthService {
         tap((res) => {
           this.setToken(res.access);
           this.setRefreshToken(res.refresh);
+        })
+      );
+  }*/
+
+  signup(firstName: string, lastName: string, email: string, password: string) {
+    return this.http.post<{ message?: string }>(
+      `${this.apiUrl}/users/register/`,
+      {
+        firstName,
+        lastName,
+        email,
+        password,
+      }
+    );
+  }
+
+  verifyEmail(email: string, code: string) {
+    return this.http
+      .post<{ fullName: string; refresh: string; access: string }>(
+        `${this.apiUrl}/users/verify-email/`,
+        {
+          email,
+          code,
+        }
+      )
+      .pipe(
+        tap((res) => {
+          this.setToken(res.access);
+          this.setRefreshToken(res.refresh);
+          console.log('Full name', res.fullName);
         })
       );
   }
