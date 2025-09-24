@@ -35,12 +35,17 @@ export class AuthService {
       );
   }
 
-  signup(email: string, password: string) {
+  signup(name: string, lastName: string, email: string, password: string) {
     return this.http
-      .post<{ refresh: string; access: string }>(`${this.apiUrl}/users/register/`, {
-        email,
-        password,
-      })
+      .post<{ refresh: string; access: string }>(
+        `${this.apiUrl}/users/register/`,
+        {
+          name,
+          lastName,
+          email,
+          password,
+        }
+      )
       .pipe(
         tap((res) => {
           this.setToken(res.access);
@@ -81,8 +86,8 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    const token =this.getToken();
-    return token !== null && token !== "undefined" && token !== '';
+    const token = this.getToken();
+    return token !== null && token !== 'undefined' && token !== '';
   }
 
   getGoogleAuth() {

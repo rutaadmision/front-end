@@ -28,12 +28,17 @@ export class SignupComponent {
   MapRoutes = MapRoutes;
   signUpForm = this.fb.group({
     name: ['', [Validators.required]],
+    lastName: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.pattern(this.emailRegex)]],
     password: ['', [Validators.required, passwordValidator()]],
   });
 
   get name() {
     return this.signUpForm.get('name') as FormControl;
+  }
+
+  get lastName() {
+    return this.signUpForm.get('lastName') as FormControl;
   }
 
   get email() {
@@ -54,15 +59,22 @@ export class SignupComponent {
     if (!this.signUpForm.valid) {
       this.showError.set(true);
     } else {
-      this.auth.signup(this.email.value, this.password.value).subscribe({
-        next: () => {
-          this.alertService.showSuccess('Cuenta creada exitosamente');
-          this.router.navigateByUrl('/dashboard');
-        },
-        error: (err: { message: string }) => {
-          alert('Signup failed: ' + err.message);
-        },
-      });
+      this.auth
+        .signup(
+          this.name.value,
+          this.lastName.value,
+          this.email.value,
+          this.password.value
+        )
+        .subscribe({
+          next: () => {
+            this.alertService.showSuccess('Cuenta creada exitosamente');
+            this.router.navigateByUrl('/dashboard');
+          },
+          error: (err: { message: string }) => {
+            alert('Signup failed: ' + err.message);
+          },
+        });
     }
   }
 }
