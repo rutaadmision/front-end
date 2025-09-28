@@ -60,28 +60,6 @@ export class SignupComponent {
     this.showPassword.update((value) => !value);
   }
 
-  /*onSignup() {
-    if (!this.signUpForm.valid) {
-      this.showError.set(true);
-    } else {
-      this.auth
-        .signup(
-          this.name.value,
-          this.lastName.value,
-          this.email.value,
-          this.password.value
-        )
-        .subscribe({
-          next: () => {
-            this.alertService.showSuccess('Cuenta creada exitosamente');
-            this.router.navigateByUrl('/dashboard');
-          },
-          error: (err: { message: string }) => {
-            alert('Signup failed: ' + err.message);
-          },
-        });
-    }
-  }*/
   onSignup() {
     if (!this.signUpForm.valid) {
       this.showError.set(true);
