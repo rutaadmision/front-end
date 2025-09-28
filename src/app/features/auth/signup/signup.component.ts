@@ -1,4 +1,4 @@
-import { JsonPipe, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import {
   FormBuilder,
@@ -14,7 +14,7 @@ import { MapRoutes } from '../../../map-routes';
 import { passwordValidator } from '../../../shared/validators/password.validator';
 @Component({
   selector: 'app-signup',
-  imports: [RouterLink, ReactiveFormsModule, JsonPipe, NgClass],
+  imports: [RouterLink, ReactiveFormsModule, NgClass],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })
