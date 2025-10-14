@@ -1,14 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MapRoutes } from '../../map-routes';
 
 @Component({
   selector: 'app-not-found',
+  standalone: true,
   templateUrl: './not-found.component.html',
-  imports: [RouterLink],
+  styleUrls: ['./not-found.component.css'],
+  imports: [CommonModule, RouterLink],
 })
 export class NotFoundComponent implements OnInit {
-  currentPath: string = '';
+  currentPath = '';
   MapRoutes = MapRoutes;
 
   constructor(private router: Router) {}

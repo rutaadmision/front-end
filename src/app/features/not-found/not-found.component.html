@@ -1,12 +1,63 @@
-<div class="flex min-h-screen items-center justify-center bg-gray-100">
-  <div class="text-center">
-    <h1 class="mb-4 text-4xl font-bold">404</h1>
-    <p class="mb-4 text-xl text-gray-600">Oops! Page not found</p>
-    <a
-      routerLink="{{ MapRoutes.home }}"
-      class="text-blue-500 underline hover:text-blue-700"
-    >
-      Return to Home
+<div class="h-screen flex items-center justify-center bg-white p-4">
+  <div
+    class="bg-white m-4 p-4 sm:p-16 rounded-2xl shadow-2xl max-w-lg w-full text-center transform transition-all duration-300 hover:shadow-xl"
+  >
+    <!-- Icon: Warning Circle (Red/Pink, centered, mimicking the image) -->
+    <div class="mb-6 flex justify-center">
+      <!-- Inline SVG for reliable, scalable icon display -->
+      <!-- Increased icon size to w-20 h-20 -->
+      <svg
+        class="w-20 h-20 text-red-500"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <!-- Outer Circle -->
+        <circle cx="12" cy="12" r="10" />
+        <!-- Exclamation Mark Top -->
+        <line x1="12" y1="8" x2="12" y2="12" />
+        <!-- Exclamation Mark Dot -->
+        <line x1="12" y1="16" x2="12.01" y2="16" />
+      </svg>
+    </div>
+
+    <h1 class="text-7xl font-extrabold mb-4" style="color: #6366f1">
+      {{ "404" }}
+    </h1>
+
+    <!-- Title: "Página no encontrada" -->
+    <h2 class="text-2xl font-bold text-gray-800 mb-3">
+      {{ "Página no encontrada" }}
+    </h2>
+
+    <p class="text-gray-500 my-4 text-lg">
+      {{ "Lo sentimos, la página que buscas no existe o ha sido movida." }}
+    </p>
+
+    <!-- Home Button: "Volver al Inicio" (Purple background) -->
+    <a routerLink="{{ MapRoutes.home }}">
+      <button class="btn btn-primary">
+        <!-- Home Icon (inline SVG) -->
+        <svg
+          class="w-5 h-5"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+
+        <span>{{ "Volver al Inicio" }}</span>
+      </button>
     </a>
   </div>
 </div>
