@@ -6,6 +6,7 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
+    canActivateChild: [dashboardRedirectGuard],
     children: [
       {
         path: '',
