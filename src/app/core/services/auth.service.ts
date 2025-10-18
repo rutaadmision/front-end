@@ -35,25 +35,6 @@ export class AuthService {
       );
   }
 
-  /*signup(name: string, lastName: string, email: string, password: string) {
-    return this.http
-      .post<{ refresh: string; access: string }>(
-        `${this.apiUrl}/users/register/`,
-        {
-          name,
-          lastName,
-          email,
-          password,
-        }
-      )
-      .pipe(
-        tap((res) => {
-          this.setToken(res.access);
-          this.setRefreshToken(res.refresh);
-        })
-      );
-  }*/
-
   signup(firstName: string, lastName: string, email: string, password: string) {
     return this.http.post<{ message?: string }>(
       `${this.apiUrl}/users/register/`,
