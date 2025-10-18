@@ -11,9 +11,9 @@ import { MapRoutes } from '../../../map-routes';
 export class HeaderComponent implements OnInit {
   MapRoutes = MapRoutes;
 
-  private alertService = inject(AuthService);
+  private authService = inject(AuthService);
   isLogin = signal(false);
   ngOnInit(): void {
-    this.isLogin.set(this.alertService.isLoggedIn());
+    this.isLogin.set(this.authService.isLoggedIn());
   }
 }
