@@ -5,6 +5,7 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { provideSweetAlert2 } from '@sweetalert2/ngx-sweetalert2';
+import { provideAngularSvgIcon } from 'angular-svg-icon';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
@@ -19,5 +20,6 @@ export const appConfig: ApplicationConfig = {
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideSweetAlert2(),
+    provideAngularSvgIcon(),
   ],
 };

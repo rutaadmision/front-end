@@ -9,6 +9,7 @@ import {
 } from 'firebase/auth';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { UserService } from './api/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -16,7 +17,11 @@ export class AuthService {
   private refreshTokenKey = 'refresh_token';
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   login(email: string, password: string) {
     return this.http
@@ -77,6 +82,7 @@ export class AuthService {
     this.logOutGoogle();
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.refreshTokenKey);
+    this.userService.user.set(null);
     this.router.navigate(['/']);
   }
 

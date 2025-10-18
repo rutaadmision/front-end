@@ -20,6 +20,7 @@
     "@angular/router": "^19.2.0",
     "@sweetalert2/ngx-sweetalert2": "^14.0.0",
     "@tailwindcss/postcss": "^4.1.14",
+    "angular-svg-icon": "^19.1.1",
     "firebase": "^11.10.0",
     "lucide-angular": "^0.546.0",
     "postcss": "^8.5.6",
