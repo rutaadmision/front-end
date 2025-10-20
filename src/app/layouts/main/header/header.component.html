@@ -1,3 +1,86 @@
+<nav class="flex items-center justify-between bg-white shadow-sm px-6 py-3">
+  <!-- Izquierda: Logo + texto -->
+  <div class="flex items-center space-x-2">
+    <lucide-icon
+      [img]="TargetIcon"
+      [size]="24"
+      class="h-10 w-10 text-indigo-500"
+    ></lucide-icon>
+    <span class="font-semibold text-lg text-gray-1000">Ruta Admisión</span>
+  </div>
+
+  <!-- Derecha: enlaces -->
+  <div class="flex items-center space-x-6 text-sm text-gray-700">
+    <a routerLink="/dashboard" class="hover:text-purple-600 transition"
+      >Dashboard</a
+    >
+
+    <button
+      class="flex items-center space-x-1 hover:text-purple-600 transition"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-4 h-4"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1"
+        />
+      </svg>
+      <span>Cerrar Sesión</span>
+    </button>
+  </div>
+</nav>
+
+<header
+  class="sticky top-0 z-50 h-16 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+>
+  <div class="container mx-auto h-16 px-4 flex items-center justify-between">
+    <a class="flex items-center gap-2">
+      <lucide-icon
+        [img]="TargetIcon"
+        [size]="24"
+        class="h-8 w-8 text-primary"
+      ></lucide-icon>
+      <h1 className="text-2xl font-bold">Ruta Admisión</h1>
+    </a>
+    <nav class="flex items-center gap-4">
+      @if (isLogin()) {
+
+      <a routerLink="{{ MapRoutes.dashboard }}">
+        <button class="btn btn-outline">Dashboard</button>
+      </a>
+
+      <a>
+        <button variant="ghost" size="sm" onclick="logout()">
+          <lucide-icon
+            [img]="LogOutIcon"
+            [size]="10"
+            class="h-4 w-4 mr-2"
+          ></lucide-icon>
+          Cerrar sesión
+        </button>
+      </a>
+
+      }@else {
+      <a routerLink="{{ MapRoutes.login }}">
+        <button class="btn btn-outline">Iniciar Sesión</button>
+      </a>
+      <a routerLink="{{ MapRoutes.signup }}">
+        <button class="btn btn-primary">Registrarse</button>
+      </a>
+
+      }
+    </nav>
+  </div>
+</header>
+
+<!--
 <div class="hero-header">
   <nav class="nav">
     <div class="nav-brand">
@@ -9,6 +92,12 @@
 
       <a routerLink="{{ MapRoutes.dashboard }}">
         <button class="btn btn-outline">Dashboard</button>
+      </a>
+
+      <a>
+        <button class="btn btn-outline" onclick="logout()">
+          Cerrar sesión
+        </button>
       </a>
 
       }@else {
@@ -23,3 +112,4 @@
     </div>
   </nav>
 </div>
+-->
