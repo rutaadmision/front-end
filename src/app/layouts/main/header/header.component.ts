@@ -20,6 +20,10 @@ export class HeaderComponent implements OnInit {
     this.isLogin.set(this.authService.isLoggedIn());
   }
 
+  test() {
+    alert('as');
+  }
+
   logout() {
     this.isLogin.set(false);
     this.authService.logout();
