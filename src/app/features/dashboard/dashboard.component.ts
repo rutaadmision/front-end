@@ -1,11 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { QuestionService } from '../../core/services/question.service';
-import { HeaderComponent } from '../../layouts/main/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [SidebarComponent, HeaderComponent],
+  imports: [SidebarComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
