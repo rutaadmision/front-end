@@ -6,12 +6,22 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
-    canActivateChild: [dashboardRedirectGuard],
+    /*canActivateChild: [dashboardRedirectGuard],*/
     children: [
       {
         path: '',
         loadComponent: () =>
           import('./features/home/home.component').then((m) => m.HomeComponent),
+        canActivate: [dashboardRedirectGuard],
+      },
+
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./features/dashboard/dashboard.component').then(
+            (m) => m.DashboardComponent
+          ),
+        canActivate: [AuthGuard],
       },
     ],
   },
@@ -53,15 +63,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/problems/problems.component').then(
         (m) => m.ProblemsComponent
-      ),
-    canActivate: [AuthGuard],
-  },
-
-  {
-    path: 'dashboard',
-    loadComponent: () =>
-      import('./features/dashboard/dashboard.component').then(
-        (m) => m.DashboardComponent
       ),
     canActivate: [AuthGuard],
   },
