@@ -16,7 +16,7 @@ import { MapRoutes } from '../../../map-routes';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent implements OnInit {
-  MapRoutes = MapRoutes;
+  readonly MapRoutes = MapRoutes;
   readonly TargetIcon = TargetIcon;
   readonly LogOutIcon = LogOutIcon;
   readonly UserIcon = UserIcon;
