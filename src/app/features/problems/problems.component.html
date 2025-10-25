@@ -36,7 +36,9 @@
       <!--/* Progress Section */-->
       <div class="px-6 py-5 border-b border-gray-200">
         <div class="flex items-center justify-between mb-3">
-          <h2 class="text-lg font-semibold text-gray-900">currentQ.category</h2>
+          <h2 class="text-lg font-semibold text-gray-900">
+            {{ currentQuestion().title }}
+          </h2>
           <span class="text-sm text-gray-600">
             Pregunta currentQuestion + 1 de questions.length
           </span>
@@ -52,16 +54,17 @@
 
       <!--Question Content-->
       <div class="px-6 py-8">
-        @for (question of questions; track question.id) {
         <h3 class="text-2xl font-bold text-gray-900 mb-8">
-          Pregunta currentQ.id
+          <!-- Pregunta {{ currentQuestion().id }}-->
         </h3>
-        <p class="text-lg text-gray-800 mb-8">currentQ.question</p>
+        <p class="text-lg text-gray-800 mb-8">
+          {{ currentQuestion().body }}
+        </p>
         <!--Options-->
-        <div class="space-y-3"></div>
-
-        }
-
+        <div class="space-y-3">
+          @for (choice of currentQuestion().choices; track choice.choice_text) {
+          }
+        </div>
         <!--
                     {/* Options */}
             <div className="space-y-3">

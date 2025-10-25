@@ -6,6 +6,7 @@ import {
   LucideAngularModule,
 } from 'lucide-angular';
 import { AuthService } from '../../core/services/auth.service';
+import { Question } from '../../interfaces/question';
 import { MapRoutes } from '../../map-routes';
 @Component({
   selector: 'app-problems',
@@ -15,39 +16,47 @@ import { MapRoutes } from '../../map-routes';
   styleUrls: ['./problems.component.css'],
 })
 export class ProblemsComponent implements OnInit {
-  readonly questions = [
+  questions: Question[] = [
     {
-      id: 1,
-      category: 'Matemáticas y Lógica',
-      question: 'Si x + 5 = 12, ¿cuál es el valor de x?',
-      options: [
-        { label: 'A.', value: '5' },
-        { label: 'B.', value: '7' },
-        { label: 'C.', value: '12' },
-        { label: 'D.', value: '17' },
+      title: 'Triángulo con ángulos de 60°, 60° y X°',
+      body: 'Si un triángulo tiene ángulos de 60°, 60° y X°, ¿cuál es el valor de X?',
+      category: 'Math',
+      explanation:
+        'La suma de los ángulos internos de cualquier triángulo siempre es 180°. Por lo tanto: 60° + 60° + X° = 180° → 120° + X° = 180° → X° = 60°',
+      tags: ['math', 'geometry', 'triangles'],
+      choices: [
+        { choice_text: '30°', is_correct: false },
+        { choice_text: '45°', is_correct: false },
+        { choice_text: '60°', is_correct: true },
+        { choice_text: '90°', is_correct: false },
       ],
     },
     {
-      id: 2,
-      category: 'Matemáticas y Lógica',
-      question: '¿Cuál es el resultado de 15 × 3?',
-      options: [
-        { label: 'A.', value: '35' },
-        { label: 'B.', value: '45' },
-        { label: 'C.', value: '50' },
-        { label: 'D.', value: '55' },
+      title: 'Multiplicación de 15 × 3',
+      body: '¿Cuál es el resultado de 15 × 3?',
+      category: 'Math',
+      explanation:
+        '15 × 3 = 45. Esto se puede calcular como: 15 + 15 + 15 = 45, o 10 × 3 = 30 más 5 × 3 = 15, sumando 30 + 15 = 45.',
+      tags: ['math', 'arithmetic', 'multiplication'],
+      choices: [
+        { choice_text: '35', is_correct: false },
+        { choice_text: '45', is_correct: true },
+        { choice_text: '50', is_correct: false },
+        { choice_text: '55', is_correct: false },
       ],
     },
     {
-      id: 3,
-      category: 'Matemáticas y Lógica',
-      question:
-        'Si un triángulo tiene ángulos de 60°, 60° y X°, ¿cuál es el valor de X?',
-      options: [
-        { label: 'A.', value: '30°' },
-        { label: 'B.', value: '45°' },
-        { label: 'C.', value: '60°' },
-        { label: 'D.', value: '90°' },
+      title: 'Ecuación lineal x + 5 = 12',
+      body: 'Si x + 5 = 12, ¿cuál es el valor de x?',
+      category: 'Math',
+      explanation:
+        'Para resolver x + 5 = 12, restamos 5 a ambos lados de la ecuación: x + 5 - 5 = 12 - 5 → x = 7',
+      tags: ['math', 'algebra', 'equations'],
+      choices: [
+        { choice_text: '5', is_correct: false },
+        { choice_text: '7', is_correct: true },
+        { choice_text: '12', is_correct: false },
+        { choice_text: '17', is_correct: false },
       ],
     },
   ];
