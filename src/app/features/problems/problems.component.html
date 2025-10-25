@@ -63,6 +63,19 @@
         <!--Options-->
         <div class="space-y-3">
           @for (choice of currentQuestion().choices; track choice.choice_text) {
+          <label
+            class="flex items-center gap-4 p-4 border-2 rounded-lg cursor-pointer transition-all"
+          >
+            <input
+              type="radio"
+              class="w-5 h-5 text-indigo-600 focus:ring-indigo-500"
+            />
+            <span class="text-gray-900 font-medium">
+              {{ choice.choice_text }}
+            </span>
+            <span class="text-gray-700"> </span>
+          </label>
+
           }
         </div>
         <!--
