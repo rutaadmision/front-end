@@ -67,7 +67,7 @@ export class ProblemsComponent implements OnInit {
   currentQuestionIndex = signal(0);
   currentQuestion = computed(() => this.questions[this.currentQuestionIndex()]);
   constructor(private auth: AuthService) {}
-
+  answer = signal<boolean>(false);
   ngOnInit(): void {
     console.log('pre', this.currentQuestion());
   }
