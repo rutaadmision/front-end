@@ -1,9 +1,11 @@
 export interface Choice {
-  choice_text: string;
+  id: number;
+  choiceText: string;
   is_correct: boolean;
 }
 
 export interface Question {
+  id: number;
   title: string;
   body: string;
   category: string;
