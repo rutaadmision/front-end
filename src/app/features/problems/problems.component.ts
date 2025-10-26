@@ -11,27 +11,33 @@ import { AuthService } from '../../core/services/auth.service';
 import { QuestionService } from '../../core/services/question.service';
 import { Choice, Question } from '../../interfaces/question';
 import { MapRoutes } from '../../map-routes';
+import { FinishScreenComponent } from './components/finish-screen/finish-screen.component';
+import { ModalComponent } from './components/modal/modal.component';
 @Component({
   selector: 'app-problems',
   standalone: true,
-  imports: [LucideAngularModule, RouterLink, NgClass],
+  imports: [
+    LucideAngularModule,
+    RouterLink,
+    NgClass,
+    ModalComponent,
+    FinishScreenComponent,
+  ],
   templateUrl: './problems.component.html',
   styleUrls: ['./problems.component.css'],
 })
 export class ProblemsComponent implements OnInit {
-  //questions: Question[] = [];
-
   questionService = inject(QuestionService);
   readonly MapRoutes = MapRoutes;
   readonly ChevronLeftIcon = ChevronLeftIcon;
   readonly ClockIcon = ClockIcon;
   currentQuestionIndex = signal(0);
-  //currentQuestion = signal<Question | null>(null);
-
   constructor(private auth: AuthService) {}
-  answerText = signal<string>('');
+  userAnswer = signal<string>('');
   isCorrectAnswer = signal<boolean>(false);
   showModal = signal<boolean>(false);
+  correctAnswer = signal<string>('');
+  endTest = signal<boolean>(false);
 
   //Remplazo de los suscribe
   questions = toSignal(this.questionService.category('Math'), {
@@ -68,15 +74,25 @@ export class ProblemsComponent implements OnInit {
   }*/
 
   handleAnswer(choice: Choice) {
-    this.answerText.set(choice.choiceText);
-    this.isCorrectAnswer.set(choice.is_correct);
+    this.userAnswer.set(choice.choiceText);
+    this.isCorrectAnswer.set(choice.isCorrect);
   }
 
   nextQuestion() {
-    this.currentQuestionIndex.update((i) => i + 1);
+    this.showModal.set(false);
+    if (this.currentQuestionIndex() + 1 == this.questions().length) {
+      this.endTest.set(true);
+    } else {
+      this.currentQuestionIndex.update((i) => i + 1);
+    }
   }
 
-  ValidateQuestion() {}
+  validate() {
+    this.correctAnswer.set(
+      this.currentChoices().find((choice) => choice.isCorrect)!.choiceText
+    );
+    this.showModal.set(true);
+  }
 
   logout() {
     this.auth.logout();

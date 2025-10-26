@@ -1,7 +1,7 @@
 export interface Choice {
   id: number;
   choiceText: string;
-  is_correct: boolean;
+  isCorrect: boolean;
 }
 
 export interface Question {
