@@ -65,12 +65,17 @@
           @for (choice of currentQuestion().choices; track choice.choice_text) {
           <label
             class="flex items-center gap-4 p-4 border-2 rounded-lg cursor-pointer transition-all"
+            [ngClass]="
+              answerText() === choice.choice_text
+                ? 'border-indigo-600 bg-indigo-50'
+                : 'border-gray-200 hover:border-gray-300 bg-white'
+            "
           >
             <input
               type="radio"
               class="w-5 h-5 text-indigo-600 focus:ring-indigo-500"
               [name]="currentQuestion().title"
-              (change)="answer.set(choice.is_correct)"
+              (change)="handleAnswer(choice)"
             />
             <span class="text-gray-900 font-medium">
               {{ choice.choice_text }}
@@ -80,122 +85,23 @@
 
           }
         </div>
-        <!--
-                    {/* Options */}
-            <div className="space-y-3">
-              {currentQ.options.map((option, index) => (
-                <label
-                  key={index}
-                  className={`flex items-center gap-4 p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                    answers[currentQuestion] === option.value
-                      ? 'border-indigo-600 bg-indigo-50'
-                      : 'border-gray-200 hover:border-gray-300 bg-white'
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name={`question-${currentQuestion}`}
-                    value={option.value}
-                    checked={answers[currentQuestion] === option.value}
-                    onChange={(e) => handleAnswer(e.target.value)}
-                    className="w-5 h-5 text-indigo-600 focus:ring-indigo-500"
-                  />
-                  <span className="text-gray-900 font-medium">
-                    {option.label}
-                  </span>
-                  <span className="text-gray-700">
-                    {option.value}
-                  </span>
-                </label>
-              ))}
-            </div>
-        -->
       </div>
+      <!--Navigation -->
 
-      <!--
-                {/* Navigation */}
-          <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between bg-gray-50">
-            <button
-              onClick={goToPrevious}
-              disabled={currentQuestion === 0}
-              class={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
-                currentQuestion === 0
-                  ? 'text-gray-400 cursor-not-allowed'
-                  : 'text-gray-700 hover:bg-gray-200'
-              }`}
-            >
-              Anterior
-            </button>
-            <button
-              onClick={goToNext}
-              disabled={currentQuestion === questions.length - 1}
-              className={`px-6 py-2 text-sm font-medium rounded-lg transition-colors ${
-                currentQuestion === questions.length - 1
-                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  : 'bg-indigo-600 text-white hover:bg-indigo-700'
-              }`}
-            >
-              Siguiente
-            </button>
-          </div>
-      -->
-    </div>
-  </div>
-
-  <!--
-<div
-  class="max-w-xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-2xl font-[Open_Sans]"
->
-
-  <div class="flex justify-between items-center text-gray-600 text-sm mb-4">
-    <button class="text-blue-500 hover:underline">← Salir</button>
-    <span>Examen UCR</span>
-    <span class="text-gray-400">0:00</span>
-  </div>
-
-  <div class="mb-6">
-    <p class="text-sm font-medium text-gray-700 mb-1">Matemáticas y Lógica</p>
-    <div class="w-full bg-gray-200 h-2 rounded-full">
       <div
-        class="bg-purple-600 h-2 rounded-full transition-all duration-500"
-      ></div>
+        class="px-6 py-4 border-t border-gray-200 flex items-center justify-end bg-gray-50"
+      >
+        <button
+          class="x-6 py-2 px-2 text-sm font-medium rounded-lg transition-colors"
+          [ngClass]="
+            !answerText()
+              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              : 'bg-indigo-600 text-white hover:bg-indigo-700'
+          "
+        >
+          Validar Respuesta
+        </button>
+      </div>
     </div>
-    <p class="text-xs text-right text-gray-500 mt-1"></p>
-  </div>
-
-
-  <h2 class="text-lg font-semibold mb-4">Pregunta</h2>
-  <p class="mb-6 text-gray-800"></p>
-
-
-  <div class="space-y-3">
-    <label
-      *ngFor="let option of question.options"
-      class="flex items-center border rounded-lg px-4 py-2 cursor-pointer transition-all duration-200"
-    >
-      <input
-        type="radio"
-        name="option"
-        class="hidden"
-        [value]="option.letter"
-      />
-      <span class="font-semibold mr-3">{{ option.letter }}.</span>
-      <span>{{ option.text }}</span>
-    </label>
-  </div>
-
-
-  <div class="flex justify-between mt-8">
-    <button
-      class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200"
-    >
-      Anterior
-    </button>
-    <button
-      class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50"
-    >
-      Siguiente
-    </button>
   </div>
 </div>
---></div>

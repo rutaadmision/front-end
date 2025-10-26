@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import { Component, computed, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
@@ -6,12 +7,12 @@ import {
   LucideAngularModule,
 } from 'lucide-angular';
 import { AuthService } from '../../core/services/auth.service';
-import { Question } from '../../interfaces/question';
+import { Choice, Question } from '../../interfaces/question';
 import { MapRoutes } from '../../map-routes';
 @Component({
   selector: 'app-problems',
   standalone: true,
-  imports: [LucideAngularModule, RouterLink],
+  imports: [LucideAngularModule, RouterLink, NgClass],
   templateUrl: './problems.component.html',
   styleUrls: ['./problems.component.css'],
 })
@@ -67,9 +68,13 @@ export class ProblemsComponent implements OnInit {
   currentQuestionIndex = signal(0);
   currentQuestion = computed(() => this.questions[this.currentQuestionIndex()]);
   constructor(private auth: AuthService) {}
-  answer = signal<boolean>(false);
-  ngOnInit(): void {
-    console.log('pre', this.currentQuestion());
+  answerText = signal<string>('');
+  isCorrectAnswer = signal<boolean>(false);
+  ngOnInit(): void {}
+
+  handleAnswer(choice: Choice) {
+    this.answerText.set(choice.choice_text);
+    this.isCorrectAnswer.set(choice.is_correct);
   }
 
   logout() {
