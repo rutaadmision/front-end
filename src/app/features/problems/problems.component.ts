@@ -1,11 +1,18 @@
 import { NgClass } from '@angular/common';
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  computed,
+  ElementRef,
+  inject,
+  OnInit,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import {
   ChevronLeftIcon,
-  CircleCheckBigIcon,
-  CircleXIcon,
   ClockIcon,
   LucideAngularModule,
 } from 'lucide-angular';
@@ -14,7 +21,8 @@ import { QuestionService } from '../../core/services/question.service';
 import { Choice, Question } from '../../interfaces/question';
 import { MapRoutes } from '../../map-routes';
 import { FinishScreenComponent } from './components/finish-screen/finish-screen.component';
-import { ModalComponent } from './components/modal/modal.component';
+import { ReviewAnswerComponent } from './components/review-answer/review-answer.component';
+
 @Component({
   selector: 'app-problems',
   standalone: true,
@@ -22,27 +30,27 @@ import { ModalComponent } from './components/modal/modal.component';
     LucideAngularModule,
     RouterLink,
     NgClass,
-    ModalComponent,
+    ReviewAnswerComponent,
     FinishScreenComponent,
   ],
   templateUrl: './problems.component.html',
   styleUrls: ['./problems.component.css'],
 })
-export class ProblemsComponent implements OnInit {
+export class ProblemsComponent implements OnInit, AfterViewChecked {
   questionService = inject(QuestionService);
   readonly MapRoutes = MapRoutes;
   readonly ChevronLeftIcon = ChevronLeftIcon;
   readonly ClockIcon = ClockIcon;
   currentQuestionIndex = signal(0);
   constructor(private auth: AuthService) {}
+
   userAnswer = signal<string>('');
   isCorrectAnswer = signal<boolean>(false);
   showModal = signal<boolean>(false);
   correctAnswer = signal<string>('');
   endTest = signal<boolean>(false);
-  readonly CircleCheckBigIcon = CircleCheckBigIcon;
-  readonly CircleXIcon = CircleXIcon;
-
+  showReview = signal<boolean>(false);
+  @ViewChild('navigationDiv') navigationDiv!: ElementRef;
   //Remplazo de los suscribe
   questions = toSignal(this.questionService.category('Math'), {
     initialValue: [],
@@ -58,6 +66,12 @@ export class ProblemsComponent implements OnInit {
     const question = this.currentQuestion();
     return question?.choices ?? [];
   });
+
+  ngAfterViewChecked(): void {
+    if (this.showReview()) {
+      this.scrollToElement();
+    }
+  }
 
   ngOnInit(): void {
     //this.loadQuestions();
@@ -83,7 +97,8 @@ export class ProblemsComponent implements OnInit {
   }
 
   nextQuestion() {
-    this.showModal.set(false);
+    this.userAnswer.set('');
+    this.showReview.set(false);
     if (this.currentQuestionIndex() + 1 == this.questions().length) {
       this.endTest.set(true);
     } else {
@@ -95,7 +110,14 @@ export class ProblemsComponent implements OnInit {
     this.correctAnswer.set(
       this.currentChoices().find((choice) => choice.isCorrect)!.choiceText
     );
-    this.showModal.set(true);
+    this.showReview.set(true);
+  }
+
+  scrollToElement() {
+    this.navigationDiv?.nativeElement.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end',
+    });
   }
 
   logout() {
