@@ -4,6 +4,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import {
   ChevronLeftIcon,
+  CircleCheckBigIcon,
+  CircleXIcon,
   ClockIcon,
   LucideAngularModule,
 } from 'lucide-angular';
@@ -38,6 +40,8 @@ export class ProblemsComponent implements OnInit {
   showModal = signal<boolean>(false);
   correctAnswer = signal<string>('');
   endTest = signal<boolean>(false);
+  readonly CircleCheckBigIcon = CircleCheckBigIcon;
+  readonly CircleXIcon = CircleXIcon;
 
   //Remplazo de los suscribe
   questions = toSignal(this.questionService.category('Math'), {
