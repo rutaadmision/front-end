@@ -1,54 +1,87 @@
-<div class="dashboard">
+<div class="flex min-h-screen bg-gray-50">
   <app-sidebar />
 
-  <div class="dashboard-main">
-    <div class="dashboard-header">
-      <h1>Matemáticas</h1>
-      <p>Selecciona un test para comenzar</p>
+  <div class="flex-1 p-8">
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">
+        ¡Bienvenido de nuevo! <span class="text-indigo-600">- Examen UCR</span>
+      </h1>
+      <p class="text-sm text-gray-600">
+        Continúa tu preparación para alcanzar tu máximo potencial
+      </p>
     </div>
 
-    <div class="tests-grid">
-      <div class="test-card" onclick="startTest('algebra')">
-        <div class="test-icon">
-          <i class="fas fa-square-root-alt"></i>
-        </div>
-        <h3>Álgebra Básica</h3>
-        <p>30 preguntas • 45 minutos</p>
-        <div class="test-progress">
-          <span>Progreso: 12/30</span>
-          <div class="progress-bar">
-            <div class="progress-fill" style="width: 40%"></div>
-          </div>
-        </div>
-      </div>
+    <!-- Stats Grid - 3 columns -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
+      <app-stat-card
+        [config]="{
+          label: 'Preguntas Completadas',
+          value: userStats.doneQuestions,
+          iconType: 'chart'
+        }"
+      >
+      </app-stat-card>
 
-      <div class="test-card" onclick="startTest('geometria')">
-        <div class="test-icon">
-          <i class="fas fa-shapes"></i>
-        </div>
-        <h3>Geometría</h3>
-        <p>25 preguntas • 40 minutos</p>
-        <div class="test-progress">
-          <span>Progreso: 0/25</span>
-          <div class="progress-bar">
-            <div class="progress-fill" style="width: 0%"></div>
-          </div>
-        </div>
-      </div>
+      <app-stat-card
+        [config]="{
+          label: 'Promedio de Aciertos',
+          value: userStats.firstTimeCorrectPercentage + '%',
+          iconType: 'target'
+        }"
+      >
+      </app-stat-card>
 
-      <div class="test-card" onclick="startTest('trigonometria')">
-        <div class="test-icon">
-          <i class="fas fa-chart-pie"></i>
-        </div>
-        <h3>Trigonometría</h3>
-        <p>20 preguntas • 35 minutos</p>
-        <div class="test-progress">
-          <span>Progreso: 15/20</span>
-          <div class="progress-bar">
-            <div class="progress-fill" style="width: 75%"></div>
-          </div>
-        </div>
-      </div>
+      <app-stat-card
+        [config]="{
+          label: 'Días de Racha',
+          value: userStats.streakDays,
+          iconType: 'streak'
+        }"
+      >
+      </app-stat-card>
     </div>
+
+    <!-- Section Title -->
+    <h2 class="text-2xl font-bold text-gray-900 mb-6">Secciones de Estudio</h2>
+
+    <!-- Sections Grid - 2x2 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+      <!-- Matemáticas y Lógica -->
+      <app-section-card
+        [config]="mathSection"
+        (practice)="onPracticeMath()"
+        (viewResults)="onViewMathResults()"
+      >
+      </app-section-card>
+
+      <!-- Comprensión Lectora -->
+      <app-section-card
+        [config]="readingSection"
+        (practice)="onPracticeReading()"
+        (viewResults)="onViewReadingResults()"
+      >
+      </app-section-card>
+
+      <!-- Razonamiento Verbal -->
+      <app-section-card
+        [config]="reasoningSection"
+        (practice)="onPracticeReasoning()"
+        (viewResults)="onViewReasoningResults()"
+      >
+      </app-section-card>
+
+      <!-- Conocimientos Generales -->
+      <app-section-card
+        [config]="generalSection"
+        (practice)="onPracticeGeneral()"
+        (viewResults)="onViewGeneralResults()"
+      >
+      </app-section-card>
+    </div>
+
+    <!-- Simulacro Completo -->
+    <app-complete-test (startSimulacro)="onStartSimulacro()">
+    </app-complete-test>
   </div>
 </div>

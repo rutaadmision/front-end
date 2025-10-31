@@ -1,0 +1,59 @@
+<div
+  class="bg-white border border-gray-200 rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow duration-200"
+>
+  <!-- Header with Icon and Title -->
+  <div class="flex items-center gap-3 mb-4">
+    <div
+      class="flex items-center justify-center w-12 h-12 rounded flex-shrink-0"
+      [ngClass]="config.iconBgColor"
+      [style.background-color]="config.iconBgColor"
+    >
+      <lucide-icon
+        [img]="getIcon()"
+        [size]="24"
+        [ngClass]="config.iconColor"
+      ></lucide-icon>
+    </div>
+    <h3 class="text-lg font-semibold text-gray-900">{{ config.title }}</h3>
+  </div>
+
+  <!-- Questions Count -->
+  <p class="text-sm text-gray-500 mb-4">
+    {{ config.completedQuestions }} de {{ config.totalQuestions }} preguntas
+    completadas
+  </p>
+
+  <!-- Progress Section -->
+  <div class="mb-4">
+    <div class="flex justify-between items-center mb-2">
+      <span class="text-sm text-gray-600">Progreso</span>
+      <span class="text-sm font-semibold text-gray-900"
+        >{{ config.progress }}%</span
+      >
+    </div>
+    <!-- Progress Bar -->
+    <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+      <div
+        class="h-full rounded-full transition-all duration-300"
+        [ngClass]="config.progressBarClass"
+        [style.width.%]="config.progress"
+      ></div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="flex gap-3">
+    <button
+      (click)="onPractice()"
+      class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors duration-200"
+    >
+      Practicar
+    </button>
+    <button
+      (click)="onViewResults()"
+      class="flex-1 bg-white hover:bg-gray-50 text-gray-700 font-medium py-2.5 px-4 rounded-lg border border-gray-300 transition-colors duration-200"
+    >
+      Ver Estadísticas
+    </button>
+  </div>
+</div>
