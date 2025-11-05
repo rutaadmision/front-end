@@ -38,7 +38,7 @@ export class DashboardComponent implements OnInit {
   mathSection: SectionCardConfig = {
     title: 'Matemáticas y Lógica',
     icon: 'math',
-    iconColor: '#9333ea',
+    iconColor: 'text-purple-600',
     iconBgColor: 'bg-purple-100',
     completedQuestions: 5,
     totalQuestions: 200,
@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit {
   readingSection: SectionCardConfig = {
     title: 'Comprensión Lectora',
     icon: 'reading',
-    iconColor: '#2563eb',
+    iconColor: 'text-blue-600',
     iconBgColor: 'bg-blue-100',
     completedQuestions: 90,
     totalQuestions: 200,
@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
   reasoningSection: SectionCardConfig = {
     title: 'Razonamiento Verbal',
     icon: 'reasoning',
-    iconColor: '#059669',
+    iconColor: 'text-green-600',
     iconBgColor: 'bg-green-100',
     completedQuestions: 156,
     totalQuestions: 200,
@@ -71,7 +71,7 @@ export class DashboardComponent implements OnInit {
   generalSection: SectionCardConfig = {
     title: 'Conocimientos Generales',
     icon: 'general',
-    iconColor: '#ea580c',
+    iconColor: 'text-orange-600',
     iconBgColor: 'bg-orange-100',
     completedQuestions: 64,
     totalQuestions: 200,
