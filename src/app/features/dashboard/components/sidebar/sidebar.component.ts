@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import {
@@ -13,6 +13,7 @@ import {
 } from 'lucide-angular';
 import { UserService } from '../../../../core/services/api/user.service';
 import { AuthService } from '../../../../core/services/auth.service';
+import { SidebarService } from '../../../../core/services/ui/sidebar.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -21,7 +22,9 @@ import { AuthService } from '../../../../core/services/auth.service';
   styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent {
-  collapsed = signal(false);
+  sidebar = inject(SidebarService);
+  collapsed = this.sidebar.collapsed;
+
   public selectedTest: 'UCR-UNA' | 'TEC' = 'UCR-UNA';
   readonly PanelLeftCloseIcon = PanelLeftCloseIcon;
   readonly CompassIcon = CompassIcon;
@@ -50,7 +53,7 @@ export class SidebarComponent {
   }
 
   toggleCollapse() {
-    this.collapsed.update((collapsed) => !collapsed);
+    this.sidebar.toggle();
   }
 
   upgradeMembership() {

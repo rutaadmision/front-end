@@ -1,5 +1,5 @@
-<div class="flex min-h-screen bg-gray-50">
-  <app-sidebar />
+<div class="flex min-h-screen bg-gray-50" [style.paddingLeft]="sidebarWidth()">
+  <app-sidebar class="fixed left-0" />
 
   <div class="flex-1 p-8">
     <!-- Header -->

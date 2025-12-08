@@ -12,6 +12,9 @@
   --success: #10b981;
   --error: #ef4444;
   --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+  --sidebar-width-expanded: 18rem;
+  --sidebar-width-collapsed: 4rem;
 }
 
 body {
