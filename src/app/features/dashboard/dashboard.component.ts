@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { StatsService } from '../../core/services/api/stats.service';
 import { SimulacroCompletoComponent } from './components/complete-test/complete-test.component';
 import {
@@ -7,6 +7,8 @@ import {
 } from './components/section-card/section-card.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { StatCardComponent } from './components/stat-card/stat-card.component';
+
+import { SidebarService } from '../../core/services/ui/sidebar.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,6 +23,15 @@ import { StatCardComponent } from './components/stat-card/stat-card.component';
 })
 export class DashboardComponent implements OnInit {
   userStats: any;
+
+  sidebar = inject(SidebarService);
+  collapsed = this.sidebar.collapsed;
+
+  sidebarWidth = computed(() =>
+    this.collapsed()
+      ? 'var(--sidebar-width-collapsed)'
+      : 'var(--sidebar-width-expanded)'
+  );
 
   constructor(public statsService: StatsService) {}
 
