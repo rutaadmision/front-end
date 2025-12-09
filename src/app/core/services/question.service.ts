@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { Question, QuestionParams } from '../../interfaces/question';
+import { Question, QuestionParams, SubmissionPayload, SubmissionResponse } from '../../interfaces/question';
 
 @Injectable({
   providedIn: 'root',
@@ -52,6 +52,28 @@ export class QuestionService {
 
     return throwError(() => new Error(errorMessage));
   }
+
+
+  /**
+   * Envía una respuesta al endpoint de submissions
+   * @param questionId ID de la pregunta
+   * @param choiceId ID de la opción seleccionada
+   */
+  submitAnswer(questionId: string, choiceId: string): Observable<SubmissionResponse> {
+    const payload: SubmissionPayload = {
+      question: questionId,
+      choice: choiceId
+    };
+
+    return this.http.post<SubmissionResponse>(
+      `${this.apiUrl}/submissions/submit/`,
+      payload
+    ).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+
 
   category(category: string): Observable<Question[]> {
     return this.http

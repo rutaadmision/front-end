@@ -46,10 +46,12 @@ export class ProblemsComponent implements OnInit, AfterViewChecked {
   userAnswer = signal<string>('');
   isCorrectAnswer = signal<boolean>(false);
   showModal = signal<boolean>(false);
-  correctAnswer = signal<string>('');
+  correctAnswerText = signal<string>('');
   endTest = signal<boolean>(false);
   showReview = signal<boolean>(false);
   currentQuestion = signal<Question | null>(null);
+  selectedChoiceId = signal<string>('');
+
 
   @ViewChild('navigationDiv') navigationDiv!: ElementRef;
 
@@ -88,7 +90,8 @@ export class ProblemsComponent implements OnInit, AfterViewChecked {
       next: (question) => {
         if (question.length > 0) {
           this.currentQuestion.set(question[0]);
-          console.log("current", this.currentQuestion());
+          this.userAnswer.set('');
+          this.showReview.set(false);
         }
 
       },
@@ -100,31 +103,35 @@ export class ProblemsComponent implements OnInit, AfterViewChecked {
     });
   }
 
-
-
-
-
   handleAnswer(choice: Choice) {
     this.userAnswer.set(choice.choiceText);
-    this.isCorrectAnswer.set(choice.isCorrect);
+    this.selectedChoiceId.set(choice.id.toString());
   }
 
   nextQuestion() {
-    this.userAnswer.set('');
-    this.showReview.set(false);
-    /*if (this.currentQuestionIndex() + 1 == this.questions().length) {
-      this.endTest.set(true);
-    } else {
-      this.currentQuestionIndex.update((i) => i + 1);
-    }*/
+    this.loadQuestion();
   }
 
+
   validate() {
-    this.correctAnswer.set(
-      this.currentChoices().find((choice) => choice.isCorrect)!.choiceText
-    );
-    this.showReview.set(true);
+    this.questionService.submitAnswer(this.currentQuestion()!.id.toString(), this.selectedChoiceId()).subscribe({
+      next: (result) => {
+        this.isCorrectAnswer.set(result.isCorrect);
+        this.correctAnswerText.set(
+          this.currentChoices().find((choice) => choice.isCorrect)!.choiceText
+        );
+        this.showReview.set(true);
+      },
+      error: (error) => {
+        let errorMessage =
+          error.message || 'Hubo un error al cargar las preguntas.';
+        console.log(errorMessage);
+      }
+    });
+
+
   }
+
 
   scrollToElement() {
     this.navigationDiv?.nativeElement.scrollIntoView({

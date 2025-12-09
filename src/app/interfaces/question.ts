@@ -20,3 +20,18 @@ export interface QuestionParams {
   random?: boolean;
   limit?: number;
 }
+
+// Payload para enviar respuesta
+export interface SubmissionPayload {
+  question: string;
+  choice: string;
+}
+
+// Respuesta del endpoint de submission
+export interface SubmissionResponse {
+  id: number;
+  question: number;
+  choice: number;
+  isCorrect: boolean;
+  submittedAt: Date;
+}
