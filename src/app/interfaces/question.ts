@@ -13,3 +13,10 @@ export interface Question {
   tags: string[];
   choices: Choice[];
 }
+
+export interface QuestionParams {
+  category?: string;
+  solved?: boolean;
+  random?: boolean;
+  limit?: number;
+}

@@ -9,7 +9,6 @@ import {
   signal,
   ViewChild,
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import {
   ChevronLeftIcon,
@@ -42,7 +41,7 @@ export class ProblemsComponent implements OnInit, AfterViewChecked {
   readonly ChevronLeftIcon = ChevronLeftIcon;
   readonly ClockIcon = ClockIcon;
   currentQuestionIndex = signal(0);
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService) { }
 
   userAnswer = signal<string>('');
   isCorrectAnswer = signal<boolean>(false);
@@ -50,17 +49,19 @@ export class ProblemsComponent implements OnInit, AfterViewChecked {
   correctAnswer = signal<string>('');
   endTest = signal<boolean>(false);
   showReview = signal<boolean>(false);
-  @ViewChild('navigationDiv') navigationDiv!: ElementRef;
-  //Remplazo de los suscribe
-  questions = toSignal(this.questionService.category('Math'), {
-    initialValue: [],
-  });
+  currentQuestion = signal<Question | null>(null);
 
-  currentQuestion = computed<Question>(() => {
+  @ViewChild('navigationDiv') navigationDiv!: ElementRef;
+
+
+  //Remplazo de los suscribe
+  //Se ejecuta al cargar el comoponente
+
+  /*currentQuestion = computed<Question>(() => {
     const questions = this.questions();
     const index = this.currentQuestionIndex();
     return questions[index] || null;
-  });
+  });*/
 
   currentChoices = computed<Choice[]>(() => {
     const question = this.currentQuestion();
@@ -74,22 +75,34 @@ export class ProblemsComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit(): void {
-    //this.loadQuestions();
+    this.loadQuestion();
   }
 
-  /*loadQuestions(): void {
-    this.questionService.category('Math').subscribe({
-      next: (data) => {
-        this.questions = data;
-        this.currentQuestion.set(this.questions[this.currentQuestionIndex()]);
+  loadQuestion(ifSolved: boolean = false): void {
+    this.questionService.getQuestion({
+      category: 'Math',
+      solved: ifSolved,
+      random: true,
+      limit: 1
+    }).subscribe({
+      next: (question) => {
+        if (question.length > 0) {
+          this.currentQuestion.set(question[0]);
+          console.log("current", this.currentQuestion());
+        }
+
       },
       error: (error) => {
         let errorMessage =
           error.message || 'Hubo un error al cargar las preguntas.';
         console.log(errorMessage);
-      },
+      }
     });
-  }*/
+  }
+
+
+
+
 
   handleAnswer(choice: Choice) {
     this.userAnswer.set(choice.choiceText);
@@ -99,11 +112,11 @@ export class ProblemsComponent implements OnInit, AfterViewChecked {
   nextQuestion() {
     this.userAnswer.set('');
     this.showReview.set(false);
-    if (this.currentQuestionIndex() + 1 == this.questions().length) {
+    /*if (this.currentQuestionIndex() + 1 == this.questions().length) {
       this.endTest.set(true);
     } else {
       this.currentQuestionIndex.update((i) => i + 1);
-    }
+    }*/
   }
 
   validate() {
