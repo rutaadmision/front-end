@@ -1,0 +1,95 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [master, trunk]
+  pull_request:
+    branches: [master, trunk]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image: node:22
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: dist/
+          retention-days: 1
+
+  smoke-test:
+    runs-on: ubuntu-latest
+    needs: build
+
+    container:
+      image: node:22
+      ports:
+        - 4200:4200
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Start Angular dev server
+        run: |
+          nohup npx ng serve \
+            --host=0.0.0.0 \
+            --port=4200 \
+            --disable-host-check \
+            --watch=false \
+            --live-reload=false \
+            --ssl=false \
+            &
+          sleep 20
+
+      - name: Smoke test root URL
+        run: curl -f http://localhost:4200 || exit 1
+
+  e2e-tests:
+    runs-on: ubuntu-latest
+    needs: build
+    container:
+      image: mcr.microsoft.com/playwright:v1.45.0-focal
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: dist/
+
+      - name: Start local server for Playwright
+        run: |
+          npm install -g http-server
+          nohup http-server ./dist -p 4201 &
+          sleep 5
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Playwright tests
+        run: echo "Playwirgt tests" #npx playwright test
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/

@@ -1,0 +1,20 @@
+<div
+  class="flex justify-between items-center p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
+>
+  <div class="flex flex-col gap-1">
+    <span class="text-sm text-gray-500 font-normal">{{ config.label }}</span>
+    <span class="text-3xl font-bold text-gray-900">{{ config.value }}</span>
+  </div>
+
+  <div
+    class="flex items-center justify-center w-12 h-12 rounded-full flex-shrink-0"
+    [ngClass]="getIconBgClass()"
+    [style.background-color]="config.iconBgColor"
+  >
+    <lucide-icon
+      [img]="getIcon()"
+      [size]="24"
+      [ngClass]="config.iconColor || getDefaultIconClass()"
+    ></lucide-icon>
+  </div>
+</div>
